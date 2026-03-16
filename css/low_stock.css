@@ -1,0 +1,696 @@
+/**
+ * Low Stock Page Styles
+ * Warning display for products with low stock levels
+ * Includes alert cards, indicators, and restock actions
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 20px 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 5px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-left-color: white;
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-left-color: white;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 260px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+/* Top Header */
+.top-header {
+    background: white;
+    padding: 20px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content h1 {
+    font-size: 28px;
+    color: #333;
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #667eea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-restock {
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    color: white;
+}
+
+.btn-restock:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.btn-view {
+    background: #17a2b8;
+    color: white;
+}
+
+.btn-view:hover {
+    background: #138496;
+    transform: translateY(-2px);
+}
+
+/* Low Stock Content */
+.low-stock-content {
+    padding: 30px;
+    animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Alert Summary */
+.alert-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+    border-left: 4px solid #667eea;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.summary-card.critical {
+    border-left-color: #dc3545;
+}
+
+.summary-card.warning {
+    border-left-color: #ffc107;
+}
+
+.summary-card.total {
+    border-left-color: #17a2b8;
+}
+
+.alert-icon {
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 12px;
+}
+
+.summary-card.critical .alert-icon {
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.summary-card.warning .alert-icon {
+    background: rgba(255, 193, 7, 0.1);
+}
+
+.summary-card.total .alert-icon {
+    background: rgba(23, 162, 184, 0.1);
+}
+
+.alert-content h3 {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.alert-content .count {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.alert-content span {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Search and Filter */
+.search-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px 0 0 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-btn {
+    padding: 12px 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+    background: #5a6fd8;
+}
+
+.filter-container {
+    display: flex;
+    gap: 15px;
+}
+
+.filter-select {
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Low Stock Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-top: 4px solid #ffc107;
+}
+
+.product-card.critical {
+    border-top-color: #dc3545;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h3 {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.badge.critical {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.badge.low {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.product-info p {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.stock-count {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.stock-count.critical {
+    color: #dc3545;
+}
+
+.stock-count.low {
+    color: #ffc107;
+}
+
+.stock-indicator {
+    margin-top: 15px;
+}
+
+.indicator-bar {
+    width: 100%;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.indicator-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.indicator-fill.critical {
+    background: #dc3545;
+}
+
+.indicator-fill.low {
+    background: #ffc107;
+}
+
+.indicator-text {
+    font-size: 12px;
+    color: #666;
+}
+
+.card-actions {
+    padding: 20px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 10px;
+}
+
+.card-actions .btn {
+    flex: 1;
+    justify-content: center;
+    font-size: 12px;
+    padding: 8px 12px;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Message Styles */
+.message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 500;
+    animation: slideInRight 0.3s ease-out;
+    z-index: 3000;
+}
+
+.message.success {
+    background: #28a745;
+}
+
+.message.error {
+    background: #dc3545;
+}
+
+.message.info {
+    background: #17a2b8;
+}
+
+.message.warning {
+    background: #ffc107;
+    color: #333;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+        display: block;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .low-stock-content {
+        padding: 20px;
+    }
+    
+    .alert-summary {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-container {
+        max-width: none;
+    }
+    
+    .filter-container {
+        flex-direction: column;
+    }
+    
+    .filter-select {
+        width: 100%;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .summary-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .alert-icon {
+        margin: 0 auto;
+    }
+}
